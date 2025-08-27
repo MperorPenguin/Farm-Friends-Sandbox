@@ -448,6 +448,25 @@
       modalPlay.innerHTML = btnPlayHTML('Play Sound');
       modalPlay.setAttribute('aria-label','Play Sound');
     }
+// === FEED: button -> show view + mount ===
+document.getElementById("nav-feed")?.addEventListener("click", () => {
+  // Use your existing helper if you have one:
+  if (typeof showView === "function") {
+    showView("view-feed");
+  } else {
+    // Fallback: hide all .view and show only #view-feed
+    document.querySelectorAll(".view").forEach(v => v.hidden = true);
+    const tgt = document.getElementById("view-feed");
+    if (tgt) tgt.hidden = false;
+  }
+
+  // Mount the game (this comes from js/feed.js)
+  if (typeof mountFeedGame === "function") {
+    mountFeedGame("#view-feed");
+  } else {
+    console.warn("mountFeedGame() not found. Is js/feed.js loaded?");
+  }
+});
 
     // iOS audio unlock (muted)
     window.addEventListener('touchstart', markInteracted, { once:true, passive:true });
